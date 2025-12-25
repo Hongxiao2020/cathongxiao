@@ -109,25 +109,30 @@ const Home = () => (
 
       <Section delay={0.2}>
         <Heading as="h3" variant="section-title">
-          Bio
-        </Heading>
+         </Heading>
         <BioSection>
-          <BioYear>1984</BioYear>
-          Born in Osaka (大阪), Japan.
+          <BioYear>Present</BioYear>
+          Assistant Professor, Luther College, Decorah IA, U.S.A.
         </BioSection>
         <BioSection>
-          <BioYear>2010</BioYear>
-          Completed the Master&apos;s Program in the Graduate School of
-          Information Science at Nara Institute of Science and Technology
-          (奈良先端科学技術大学院大学情報科学研究科修士課程)
+          <BioYear>2020</BioYear>
+          Instructor, University of South Carolina, Columbia SC, U.S.A.
         </BioSection>
         <BioSection>
-          <BioYear>2010</BioYear>
-          Worked at Yahoo! Japan (ヤフー株式会社入社)
+          <BioYear>2016</BioYear>
+          NBA Reporter, Golden State Warriors, Tencent Inc., Oakland CA, U.S.A.
         </BioSection>
         <BioSection>
-          <BioYear>2012 to present</BioYear>
-          Working as a freelancer
+          <BioYear>2015</BioYear>
+          Business Development Manager, Tencent Inc., Beijing, China
+        </BioSection>
+        <BioSection>
+          <BioYear>2012</BioYear>
+          Assistant Director of Media, Total Sports Asia Inc., Beijing, China
+        </BioSection>
+        <BioSection>
+          <BioYear>2009</BioYear>
+          Activity Coordinator, Tuopu Inc., Wuhan, China
         </BioSection>
       </Section>
 
@@ -138,13 +143,13 @@ const Home = () => (
         <Paragraph>
           Art, Music,{' '}
           <Link href="https://illust.odoruinu.net/" target="_blank">
-            Drawing
+            Travel
           </Link>
-          , Playing Drums,{' '}
+          , Cook,{' '}
           <Link href="https://500px.com/p/craftzdog" target="_blank">
             Photography
           </Link>
-          , Leica, Machine Learning
+          , Dance
         </Paragraph>
       </Section>
 
