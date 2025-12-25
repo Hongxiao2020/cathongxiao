@@ -68,31 +68,20 @@ const Home = () => (
         </Box>
       </Box>
 
-      <Section delay={0.1}>
+      <Section delay={0.0}>
         <Heading as="h3" variant="section-title">
           Work
         </Heading>
         <Paragraph>
-          Hongxiao is a freelance and a full-stack developer based in Osaka with a
-          passion for building digital services/stuff he wants. He has a knack
-          for all things launching products, from planning and designing all the
-          way to solving real-life problems with code. When not online, he loves
-          hanging out with his camera. Currently, he is living off of his own
-          product called{' '}
-          <Link as={NextLink} href="/works/inkdrop" passHref scroll={false}>
-            Inkdrop
+          I&apos;m a{' '}
+          <Link as={NextLink} href="https://www.luther.edu/faculty/hongxiao-yu" passHref scroll={false}>
+            professor
           </Link>
-          . He publishes content for marketing his products and his YouTube
-          channel called &quot;
-          <Link
-            as={NextLink}
-            href="https://www.youtube.com/devaslife"
-            passHref
-            target="_blank"
-          >
-            Dev as Life
-          </Link>
-          &quot; has more than 100k subscribers.
+          {' '}and{' '}
+          <Link as={NextLink} href="https://scholar.google.com/citations?hl=en&user=r6G7LEQAAAAJ" passHref scroll={false}>
+            scholar
+          </Link>{' '}
+          who loves connecting classroom learning with real-world business. With experience in AI, VR, and industry projects, I I am passionate about creating experiential learning for students and exploring how technology shapes the way people think, decide, and act.
         </Paragraph>
         <Box align="center" my={4}>
           <Button
