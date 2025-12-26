@@ -8,7 +8,10 @@ import {
   Button,
   List,
   ListItem,
-  useColorModeValue
+  useColorModeValue,
+  Text,
+  Badge,
+  AspectRatio
 } from '@chakra-ui/react'
 import { ChevronRightIcon, EmailIcon } from '@chakra-ui/icons'
 import Paragraph from '../components/paragraph'
@@ -21,15 +24,203 @@ import thumbYouTube from '../public/images/links/youtube.png'
 import thumbInkdrop from '../public/images/works/inkdrop_eyecatch.png'
 import Image from 'next/image'
 
-const Home = () => (
+// Sample posts data structure
+// In a real implementation, this would come from:
+// - An API endpoint via getServerSideProps
+// - Markdown files fetched dynamically
+// - A headless CMS (Contentful, Sanity, etc.)
+// Post fields: image, url, title, description, tags, category, date
+const samplePosts = [
+  {
+    id: 1,
+    title: 'AI and Virtual Reality in Education',
+    description: 'Exploring how emerging technologies are transforming classroom learning experiences and student engagement.',
+    image: '/images/works/styly_eyecatch.png',
+    url: '/posts/ai-vr-education',
+    date: '2024-01-15',
+    category: 'Research',
+    tags: ['AI', 'VR', 'Education']
+  },
+  {
+    id: 2,
+    title: 'Experiential Learning in Business',
+    description: 'Connecting theoretical knowledge with practical industry applications through innovative teaching methods.',
+    image: '/images/works/inkdrop_eyecatch.png',
+    url: '/posts/experiential-learning',
+    date: '2023-12-20',
+    category: 'Teaching',
+    tags: ['Business', 'Pedagogy', 'Innovation']
+  },
+  {
+    id: 3,
+    title: 'Decision Making and Technology',
+    description: 'Investigating the intersection of cognitive science and digital tools in modern decision-making processes.',
+    image: '/images/works/walknote_eyecatch.png',
+    url: '/posts/decision-making-tech',
+    date: '2023-11-10',
+    category: 'Research',
+    tags: ['Cognitive Science', 'Technology', 'Psychology']
+  },
+  {
+    id: 4,
+    title: 'Student Engagement Strategies',
+    description: 'Practical approaches to foster active participation and meaningful learning in higher education.',
+    image: '/images/works/modetokyo_eyecatch.png',
+    url: '/posts/student-engagement',
+    date: '2023-10-05',
+    category: 'Teaching',
+    tags: ['Education', 'Engagement', 'Best Practices']
+  }
+]
+
+const Home = ({ posts = samplePosts }) => {
+  // Featured post (hero) - first post if available
+  const featuredPost = posts.length > 0 ? posts[0] : null
+  // Remaining posts for grid
+  const remainingPosts = posts.length > 1 ? posts.slice(1) : []
+  
+  // Color mode values - must be called at the top level
+  const heroBg = useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')
+  const cardBg = useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')
+  const textColor = useColorModeValue('gray.600', 'gray.400')
+  const dateColor = useColorModeValue('gray.500', 'gray.400')
+  const infoBg = useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')
+
+  return (
   <Layout>
+    {/* Featured Hero Section - displays the first post as a featured hero */}
+    {featuredPost && (
+      <Box mb={10}>
+        <Container maxW="container.xl">
+          <Box
+            position="relative"
+            borderRadius="lg"
+            overflow="hidden"
+            bg={heroBg}
+            css={{ backdropFilter: 'blur(10px)' }}
+          >
+            <AspectRatio ratio={21 / 9} maxH="400px">
+              <Box position="relative">
+                <Image
+                  src={featuredPost.image}
+                  alt={featuredPost.title}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  priority
+                />
+                <Box
+                  position="absolute"
+                  top={0}
+                  left={0}
+                  right={0}
+                  bottom={0}
+                  bg="blackAlpha.600"
+                />
+              </Box>
+            </AspectRatio>
+            <Box
+              position="absolute"
+              bottom={0}
+              left={0}
+              right={0}
+              p={8}
+              color="white"
+            >
+              <Badge colorScheme="teal" mb={2}>
+                {featuredPost.category}
+              </Badge>
+              <Text fontSize="sm" mb={2} opacity={0.9}>
+                {new Date(featuredPost.date).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </Text>
+              <Heading as="h2" size="xl" mb={3}>
+                {featuredPost.title}
+              </Heading>
+              <Text fontSize="lg" mb={4} opacity={0.95}>
+                {featuredPost.description}
+              </Text>
+              <Button
+                as={NextLink}
+                href={featuredPost.url}
+                colorScheme="teal"
+                size="lg"
+                rightIcon={<ChevronRightIcon />}
+              >
+                Read Now
+              </Button>
+            </Box>
+          </Box>
+        </Container>
+      </Box>
+    )}
+
+    {/* Posts Grid Section - displays remaining posts in a grid layout */}
+    {remainingPosts.length > 0 && (
+      <Container maxW="container.xl" mb={10}>
+        <Heading as="h3" fontSize={24} mb={6}>
+          Recent Posts
+        </Heading>
+        <SimpleGrid columns={[1, 2, 3]} gap={6}>
+          {remainingPosts.map(post => (
+            <Box
+              key={post.id}
+              borderRadius="lg"
+              overflow="hidden"
+              bg={cardBg}
+              transition="transform 0.2s"
+              _hover={{ transform: 'translateY(-4px)' }}
+            >
+              <Link as={NextLink} href={post.url} style={{ textDecoration: 'none' }}>
+                <AspectRatio ratio={16 / 9}>
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    fill
+                    style={{ objectFit: 'cover' }}
+                  />
+                </AspectRatio>
+                <Box p={4}>
+                  <Badge colorScheme="teal" mb={2}>
+                    {post.category}
+                  </Badge>
+                  <Text fontSize="xs" mb={2} color={dateColor}>
+                    {new Date(post.date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric'
+                    })}
+                  </Text>
+                  <Heading as="h4" size="md" mb={2}>
+                    {post.title}
+                  </Heading>
+                  <Text fontSize="sm" noOfLines={3} color={textColor}>
+                    {post.description}
+                  </Text>
+                  <Box mt={3}>
+                    {post.tags.map(tag => (
+                      <Badge key={tag} mr={2} mb={2} variant="outline">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </Box>
+                </Box>
+              </Link>
+            </Box>
+          ))}
+        </SimpleGrid>
+      </Container>
+    )}
+
     <Container>
       <Box
         borderRadius="lg"
         mb={6}
         p={3}
         textAlign="center"
-        bg={useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')}
+        bg={infoBg}
         css={{ backdropFilter: 'blur(10px)' }}
       >
         Hello, I&apos;m an researcher & teacher in the U.S.!
@@ -232,7 +423,7 @@ const Home = () => (
       </Section>
     </Container>
   </Layout>
-)
+)}
 
 export default Home
 export { getServerSideProps } from '../components/chakra'
