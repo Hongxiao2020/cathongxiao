@@ -36,7 +36,7 @@ const samplePosts = [
     title: 'AI and Virtual Reality in Education',
     description: 'Exploring how emerging technologies are transforming classroom learning experiences and student engagement.',
     image: '/images/works/styly_eyecatch.png',
-    url: '/posts/ai-vr-education',
+    url: '#',
     date: '2024-01-15',
     category: 'Research',
     tags: ['AI', 'VR', 'Education']
@@ -46,7 +46,7 @@ const samplePosts = [
     title: 'Experiential Learning in Business',
     description: 'Connecting theoretical knowledge with practical industry applications through innovative teaching methods.',
     image: '/images/works/inkdrop_eyecatch.png',
-    url: '/posts/experiential-learning',
+    url: '#',
     date: '2023-12-20',
     category: 'Teaching',
     tags: ['Business', 'Pedagogy', 'Innovation']
@@ -56,7 +56,7 @@ const samplePosts = [
     title: 'Decision Making and Technology',
     description: 'Investigating the intersection of cognitive science and digital tools in modern decision-making processes.',
     image: '/images/works/walknote_eyecatch.png',
-    url: '/posts/decision-making-tech',
+    url: '#',
     date: '2023-11-10',
     category: 'Research',
     tags: ['Cognitive Science', 'Technology', 'Psychology']
@@ -66,12 +66,29 @@ const samplePosts = [
     title: 'Student Engagement Strategies',
     description: 'Practical approaches to foster active participation and meaningful learning in higher education.',
     image: '/images/works/modetokyo_eyecatch.png',
-    url: '/posts/student-engagement',
+    url: '#',
     date: '2023-10-05',
     category: 'Teaching',
     tags: ['Education', 'Engagement', 'Best Practices']
   }
 ]
+
+// Helper function to format dates consistently
+const formatDate = (dateString, format = 'long') => {
+  const date = new Date(dateString)
+  if (format === 'long') {
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })
+  }
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  })
+}
 
 const Home = ({ posts = samplePosts }) => {
   // Featured post (hero) - first post if available
@@ -80,11 +97,10 @@ const Home = ({ posts = samplePosts }) => {
   const remainingPosts = posts.length > 1 ? posts.slice(1) : []
   
   // Color mode values - must be called at the top level
-  const heroBg = useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')
-  const cardBg = useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')
+  // Shared background for consistent styling across hero, cards, and info boxes
+  const sharedBg = useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')
   const textColor = useColorModeValue('gray.600', 'gray.400')
   const dateColor = useColorModeValue('gray.500', 'gray.400')
-  const infoBg = useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')
 
   return (
   <Layout>
@@ -96,7 +112,7 @@ const Home = ({ posts = samplePosts }) => {
             position="relative"
             borderRadius="lg"
             overflow="hidden"
-            bg={heroBg}
+            bg={sharedBg}
             css={{ backdropFilter: 'blur(10px)' }}
           >
             <AspectRatio ratio={21 / 9} maxH="400px">
@@ -130,11 +146,7 @@ const Home = ({ posts = samplePosts }) => {
                 {featuredPost.category}
               </Badge>
               <Text fontSize="sm" mb={2} opacity={0.9}>
-                {new Date(featuredPost.date).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                })}
+                {formatDate(featuredPost.date, 'long')}
               </Text>
               <Heading as="h2" size="xl" mb={3}>
                 {featuredPost.title}
@@ -169,11 +181,11 @@ const Home = ({ posts = samplePosts }) => {
               key={post.id}
               borderRadius="lg"
               overflow="hidden"
-              bg={cardBg}
+              bg={sharedBg}
               transition="transform 0.2s"
               _hover={{ transform: 'translateY(-4px)' }}
             >
-              <Link as={NextLink} href={post.url} style={{ textDecoration: 'none' }}>
+              <Link as={NextLink} href={post.url} textDecoration="none">
                 <AspectRatio ratio={16 / 9}>
                   <Image
                     src={post.image}
@@ -187,11 +199,7 @@ const Home = ({ posts = samplePosts }) => {
                     {post.category}
                   </Badge>
                   <Text fontSize="xs" mb={2} color={dateColor}>
-                    {new Date(post.date).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric'
-                    })}
+                    {formatDate(post.date, 'short')}
                   </Text>
                   <Heading as="h4" size="md" mb={2}>
                     {post.title}
@@ -220,7 +228,7 @@ const Home = ({ posts = samplePosts }) => {
         mb={6}
         p={3}
         textAlign="center"
-        bg={infoBg}
+        bg={sharedBg}
         css={{ backdropFilter: 'blur(10px)' }}
       >
         Hello, I&apos;m an researcher & teacher in the U.S.!
